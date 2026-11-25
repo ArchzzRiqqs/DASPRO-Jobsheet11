@@ -2,7 +2,6 @@
 import java.util.Scanner;
 
 public class KubusLimas28 {
-
     public static int luasPersegi(int s) {
         return s * s;
     }

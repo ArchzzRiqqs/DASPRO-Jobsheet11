@@ -2,7 +2,6 @@
 import java.util.Scanner;
 
 public class Kafe28 {
-
     public static void Menu(String namaPelanggan, boolean isMember) {
         System.out.println("Selamat datang, " + namaPelanggan + "!");
 

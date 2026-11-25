@@ -1,6 +1,5 @@
 
 public class PengunjungCafe28 {
-
     static void daftarPengunjung(int nomorMeja, String... namaPengunjung) {
         System.out.println("Nomor Meja: " + nomorMeja);
         System.out.println("Daftar Nama Pengunjung:");
