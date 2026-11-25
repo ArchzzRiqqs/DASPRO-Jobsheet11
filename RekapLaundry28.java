@@ -15,18 +15,21 @@ public class RekapLaundry28 {
 
     public static void tampilTabel(int[][] data, String[] layanan, int[] hargaPerKg, String[] hari) {
         System.out.println("\nRekap Berat Cucian (Kg)");
-        System.out.printf("%-15s %-10s", "Layanan", "Harga/kg");
+        System.out.printf("%-20s %-12s", "Layanan", "Harga/kg");
 
         for (int j = 0; j < hari.length; j++) {
-            System.out.printf("%-8s", hari[j]);
+            System.out.printf("%-12s", hari[j]);
         }
+
         System.out.println();
 
         for (int i = 0; i < layanan.length; i++) {
-            System.out.printf("%-15s Rp%-8d", layanan[i], hargaPerKg[i]);
+            System.out.printf("%-20s Rp%-10d", layanan[i], hargaPerKg[i]);
+
             for (int j = 0; j < hari.length; j++) {
-                System.out.printf("%-8d", data[i][j]);
+                System.out.printf("%-12d", data[i][j]);
             }
+
             System.out.println();
         }
     }
@@ -79,7 +82,6 @@ public class RekapLaundry28 {
 
     public static void hitungPendapatan(int[][] data, String[] layanan, int[] hargaPerKg) {
         System.out.println("\nLaporan Pendapatan Laundry");
-
         int totalKeseluruhan = 0;
 
         for (int i = 0; i < layanan.length; i++) {
@@ -87,23 +89,55 @@ public class RekapLaundry28 {
             int pendapatan = beratLayanan * hargaPerKg[i];
             totalKeseluruhan += pendapatan;
 
-            System.out.printf("%-15s : %3d kg x Rp%,6d = Rp%,d\n", layanan[i], beratLayanan, hargaPerKg[i], pendapatan);
+            System.out.printf("%-20s : %3d kg x Rp%,d = Rp%,d\n", layanan[i], beratLayanan, hargaPerKg[i], pendapatan);
         }
 
-        System.out.printf("Total Pendapatan 6 Hari : Rp%,d\n", totalKeseluruhan);
+        System.out.printf("Total Pendapatan %d Hari : Rp%,d\n", data[0].length, totalKeseluruhan);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String[] layanan = { "Cuci Kering", "Cuci Setrika", "Setrika Saja", "Express" };
-        int[] hargaPerKg = { 6000, 8000, 5000, 12000 };
-        String[] hari = { "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu" };
-        int[][] data = new int[4][6];
+
+        System.out.print("Masukkan jumlah layanan: ");
+        int jumlahLayanan = sc.nextInt();
+
+        System.out.print("Masukkan jumlah hari: ");
+        int jumlahHari = sc.nextInt();
+
+        if (jumlahLayanan <= 0 || jumlahHari <= 0) {
+            System.out.println("Jumlah layanan dan hari harus lebih dari 0.");
+            sc.close();
+            return;
+        }
+
+        String[] layanan = new String[jumlahLayanan];
+        int[] hargaPerKg = new int[jumlahLayanan];
+        String[] hari = new String[jumlahHari];
+        int[][] data = new int[jumlahLayanan][jumlahHari];
+
+        for (int i = 0; i < jumlahLayanan; i++) {
+            System.out.println("\nData layanan ke-" + (i + 1));
+            System.out.print("Nama layanan: ");
+            layanan[i] = sc.nextLine();
+
+            if (i == 0) {
+                sc.nextLine();
+            }
+
+            System.out.print("Harga per kg: Rp");
+            hargaPerKg[i] = sc.nextInt();
+            sc.nextLine();
+        }
+
+        for (int j = 0; j < jumlahHari; j++) {
+            hari[j] = "Hari ke-" + (j + 1);
+        }
+
         inputData(sc, data, layanan, hari);
         tampilTabel(data, layanan, hargaPerKg, hari);
         layananTertinggi(data, layanan);
         int idxSibuk = hariTersibuk(data);
-        System.out.println("Hari tersibuk adalah hari " + hari[idxSibuk]);
+        System.out.println("\nHari tersibuk adalah " + hari[idxSibuk]);
         hitungPendapatan(data, layanan, hargaPerKg);
         sc.close();
     }
